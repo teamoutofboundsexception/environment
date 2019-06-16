@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  backend:
+    depends_on:
+     - "database"
+     - "graph"
+    image: "openjdk:12.0"
+    ports:
+      - "8080:80"
+    restart: "always"
+    volumes:
+      - "./backend:/application"
+    working_dir: "/application"
+  database:
+    environment:
+      POSTGRES_PASSWORD: "root"
+    image: "postgres:11.3"
+    restart: "always"
+    volumes:
+      - "./postgres/data:/var/lib/postgresql/data"
+  frontend:
+    depends_on:
+     - "backend"
+    image: "nginx:1.17"
+    ports:
+      - "8000:80"
+    restart: "always"
+    volumes:
+      - "./frontend:/var/www"
+    working_dir: "/application"
+  graph:
+    image: "neo4j:3.5"
+    ports:
+     - "7474:7474"
+    restart: "always"
+    volumes:
+     - "./graph/data:/data"
+
