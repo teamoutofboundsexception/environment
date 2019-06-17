@@ -2,15 +2,16 @@ version: "3"
 
 services:
   backend:
+    command: ["gradle", "clean", "bootRun", "--args=\"--spring.profiles.active=docker\""]
     depends_on:
      - "database"
      - "graph"
-    image: "openjdk:12.0"
+    image: "gradle:5.4-jdk"
     ports:
-      - "8080:80"
+     - "8080:8080"
     restart: "always"
     volumes:
-      - "./backend:/application"
+     - "./backend:/application"
     working_dir: "/application"
   database:
     environment:
