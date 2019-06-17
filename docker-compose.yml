@@ -14,11 +14,12 @@ services:
     working_dir: "/application"
   database:
     environment:
-      POSTGRES_PASSWORD: "root"
-    image: "postgres:11.3"
+     - "MYSQL_DATABASE=application"
+     - "MYSQL_ROOT_PASSWORD=root"
+    image: "mariadb:10.3"
     restart: "always"
     volumes:
-      - "./database/data:/var/lib/postgresql/data"
+     - "./database/data:/var/lib/mysql"
   frontend:
     depends_on:
      - "backend"
