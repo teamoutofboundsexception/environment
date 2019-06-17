@@ -1,8 +1,8 @@
 [submodule "backend"]
 	path = backend
-	url = git@github.com:teamoutofboundsexception/backend.git
+	url = ../backend.git
 	branch = master
 [submodule "frontend"]
 	path = frontend
-	url = git@github.com:teamoutofboundsexception/frontend.git
+	url = ../frontend.git
 	branch = master
