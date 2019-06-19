@@ -24,12 +24,25 @@ services:
   frontend:
     depends_on:
      - "backend"
+     - "frontend-builder"
+    environment:
+     - "API_ENDPOINT=http://localhost:8080"
     image: "nginx:1.17"
     ports:
-      - "8000:80"
+     - "8000:80"
     restart: "always"
     volumes:
-      - "./frontend:/var/www"
+     - "./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+     - "./frontend/html:/usr/share/nginx/html:ro"
+    working_dir: "/usr/share/nginx/html"
+  frontend-builder:
+    command: "bash -c \"rm --recursive --force node_modules/* && npm install --force && npm run build --force\""
+    image: "node:12.4"
+    environment:
+     - "API_ENDPOINT=http://localhost:8080"
+    restart: "no"
+    volumes:
+     - "./frontend:/application"
     working_dir: "/application"
   graph:
     image: "neo4j:3.5"
