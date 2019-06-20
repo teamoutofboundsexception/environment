@@ -51,7 +51,7 @@ create table Places (
 	normalPrice decimal(5,2) not null,
 	openingTime time,
 	closingTime time,
-	avgTimeSpent decimal(4,2),
+	avgTimeSpent time,
 	
 	primary key (placeId),
 	foreign key (cityId) references Cities (cityId),
